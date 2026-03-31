@@ -1,8 +1,7 @@
-name: openenv-project
-version: 1.0
+env:
+  name: openenv-project
+  version: 1.0
 
-endpoints:
+api:
   reset: /reset
   step: /step
-
-protocol: http
