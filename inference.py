@@ -4,11 +4,11 @@ import random
 
 app = FastAPI()
 
-# Request model for step
 class Action(BaseModel):
     action: int = 0
 
-@app.post("/reset")
+# Allow both GET and POST
+@app.api_route("/reset", methods=["GET", "POST"])
 def reset():
     return {
         "observation": 0,
@@ -17,8 +17,8 @@ def reset():
         "info": {}
     }
 
-@app.post("/step")
-def step(action: Action):
+@app.api_route("/step", methods=["GET", "POST"])
+def step(action: Action = None):
     return {
         "observation": random.randint(0, 10),
         "reward": random.randint(0, 1),
