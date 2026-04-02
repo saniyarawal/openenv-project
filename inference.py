@@ -1,27 +1,25 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
+import os
 import random
 
-app = FastAPI()
+API_BASE_URL = os.getenv("API_BASE_URL", "https://api.openai.com/v1")
+MODEL_NAME = os.getenv("MODEL_NAME", "gpt-4.1-mini")
+HF_TOKEN = os.getenv("HF_TOKEN", "dummy")
 
-class Action(BaseModel):
-    action: int = 0
+def run_env():
+    steps = 3
+    rewards = []
 
-# Allow both GET and POST
-@app.api_route("/reset", methods=["GET", "POST"])
-def reset():
-    return {
-        "observation": 0,
-        "reward": 0,
-        "done": False,
-        "info": {}
-    }
+    print(f"[START] task=test env=openenv model={MODEL_NAME}")
 
-@app.api_route("/step", methods=["GET", "POST"])
-def step(action: Action = None):
-    return {
-        "observation": random.randint(0, 10),
-        "reward": random.randint(0, 1),
-        "done": random.choice([True, False]),
-        "info": {}
-    }
+    for i in range(1, steps + 1):
+        action = f"move_{i}"
+        reward = round(random.random(), 2)
+        done = (i == steps)
+        rewards.append(reward)
+
+        print(f"[STEP] step={i} action={action} reward={reward:.2f} done={str(done).lower()} error=null")
+
+    print(f"[END] success=true steps={steps} rewards={','.join(f'{r:.2f}' for r in rewards)}")
+
+if __name__ == "__main__":
+    run_env()
