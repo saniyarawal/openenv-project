@@ -2,6 +2,5 @@ env:
   name: openenv-project
   version: 1.0
 
-api:
-  reset: /reset
-  step: /step
+entrypoint:
+  file: inference.py
