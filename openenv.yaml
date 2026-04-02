@@ -1,7 +1,5 @@
-name: openenv-project
+env_name: openenv-project
 
-entry_point: inference.py
+entrypoint: inference.py
 
-framework: openenv
-
-version: 1.0
+type: openenv
